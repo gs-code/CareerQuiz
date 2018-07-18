@@ -261,140 +261,81 @@ app.controller('HomeCtrl',  ['$scope', '$http', '$httpParamSerializer', '$filter
 
     $scope.submitted = true;
 
-    if (isValid)
+    // added || !isValid for demo purposes
+    if (isValid || !isValid)
     {
       $state.go('home.page1');
       if (!$scope.MauticSendForm1)
       {
         $scope.MauticSendForm1 = true;
-        if ($scope.surveyType == 1)
-        {
-          $http({
-              method: 'POST',
-//              url: 'http://trk.southhills.edu/form/submit?formId=16',
-//              url: 'http://www.southhills.edu/quiz/saveQuizData.php',
-              data: $httpParamSerializer({
-		'formId': 16,
-                'firstname': $scope.formData.firstname,
-                'lastname': $scope.formData.lastname,
-                'email': $scope.formData.email,
-		'return': 'http://www.southhills.edu/quiz/thankyou.php'
-              }),
-              headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-          });
-        }
-        else if ($scope.surveyType == 2)
-        {
-          $http({
-              method: 'POST',
-//              url: 'http://trk.southhills.edu/form/submit?formId=15',
-//              url: 'http://www.southhills.edu/quiz/saveQuizData.php',
-              data: $httpParamSerializer({
-		'formId': 15,
-                'firstname': $scope.formData.firstname,
-                'lastname': $scope.formData.lastname,
-                'email': $scope.formData.email,
-		'return': 'http://www.southhills.edu/quiz/thankyou.php'
-              }),
-              headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-          });
-        }
+        $http({
+            method: 'POST',
+            url: 'DATA POST URL HERE',
+            data: $httpParamSerializer({
+	            'formId': 16,
+              'firstname': $scope.formData.firstname,
+              'lastname': $scope.formData.lastname,
+              'email': $scope.formData.email,
+	            'return': 'THANK YOU URL HERE'
+            }),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
       }
     }
   }
 
   $scope.processForm2 = function() {
 
-    //if no formData, redirect to contact page
-    if (typeof $scope.formData.email === 'undefined' || typeof $scope.formData.firstname === 'undefined' || typeof $scope.formData.lastname === 'undefined')
+    //Deal with no programs found
+    if ($scope.filteredPrograms.length == 0)
     {
-      $state.go('home.contact');
+      $state.go('home.page1');
     }
     else
     {
-      //Deal with no programs found
-      console.log($scope.filteredPrograms);
-      console.log($scope.filteredPrograms.length);
-      if ($scope.filteredPrograms.length == 0)
+      $state.go('home.results');
+
+      var resultProgram1 = (typeof $scope.filteredPrograms[0] !== 'undefined') ? $scope.filteredPrograms[0].slug : 'NONE';
+      var resultProgram2 = (typeof $scope.filteredPrograms[1] !== 'undefined') ? $scope.filteredPrograms[1].slug : 'NONE';
+      var resultProgram3 = (typeof $scope.filteredPrograms[2] !== 'undefined') ? $scope.filteredPrograms[2].slug : 'NONE';
+
+      var resultProgram1Text = (typeof $scope.filteredPrograms[0] !== 'undefined') ? $scope.filteredPrograms[0].text : 'View All Programs';
+      var resultProgram2Text = (typeof $scope.filteredPrograms[1] !== 'undefined') ? $scope.filteredPrograms[1].text : 'View All Programs';
+      var resultProgram3Text = (typeof $scope.filteredPrograms[2] !== 'undefined') ? $scope.filteredPrograms[2].text : 'View All Programs';
+
+      var resultProgram1Link = (typeof $scope.filteredPrograms[0] !== 'undefined') ? $scope.filteredPrograms[0].link : 'http://www.southhills.edu/programs/';
+      var resultProgram2Link = (typeof $scope.filteredPrograms[1] !== 'undefined') ? $scope.filteredPrograms[1].link : 'http://www.southhills.edu/programs/';
+      var resultProgram3Link = (typeof $scope.filteredPrograms[2] !== 'undefined') ? $scope.filteredPrograms[2].link : 'http://www.southhills.edu/programs/';
+
+      if (!$scope.MauticSendForm2)
       {
-        $state.go('home.page1');
-      }
-      else
-      {
-        $state.go('home.results');
-
-        var resultProgram1 = (typeof $scope.filteredPrograms[0] !== 'undefined') ? $scope.filteredPrograms[0].slug : 'NONE';
-        var resultProgram2 = (typeof $scope.filteredPrograms[1] !== 'undefined') ? $scope.filteredPrograms[1].slug : 'NONE';
-        var resultProgram3 = (typeof $scope.filteredPrograms[2] !== 'undefined') ? $scope.filteredPrograms[2].slug : 'NONE';
-
-        var resultProgram1Text = (typeof $scope.filteredPrograms[0] !== 'undefined') ? $scope.filteredPrograms[0].text : 'View All Programs';
-        var resultProgram2Text = (typeof $scope.filteredPrograms[1] !== 'undefined') ? $scope.filteredPrograms[1].text : 'View All Programs';
-        var resultProgram3Text = (typeof $scope.filteredPrograms[2] !== 'undefined') ? $scope.filteredPrograms[2].text : 'View All Programs';
-
-        var resultProgram1Link = (typeof $scope.filteredPrograms[0] !== 'undefined') ? $scope.filteredPrograms[0].link : 'http://www.southhills.edu/programs/';
-        var resultProgram2Link = (typeof $scope.filteredPrograms[1] !== 'undefined') ? $scope.filteredPrograms[1].link : 'http://www.southhills.edu/programs/';
-        var resultProgram3Link = (typeof $scope.filteredPrograms[2] !== 'undefined') ? $scope.filteredPrograms[2].link : 'http://www.southhills.edu/programs/';
-
-        if (!$scope.MauticSendForm2)
-        {
-          $scope.MauticSendForm2 = true;
-          if ($scope.surveyType == 1)
-          {
-            $http({
-                method: 'POST',
-  //              url: 'http://trk.southhills.edu/form/submit?formId=13',
-  //              url: 'http://www.southhills.edu/quiz/saveQuizData.php',
-                data: $httpParamSerializer({
-  		'formId': 13,
-                  'firstname': $scope.formData.firstname,
-                  'lastname': $scope.formData.lastname,
-                	'career_quiz_result_1': resultProgram1,
-                	'career_quiz_result_2': resultProgram2,
-                	'career_quiz_result_3': resultProgram3,
-                	'career_quiz_result_1_text': resultProgram1Text,
-                	'career_quiz_result_2_text': resultProgram2Text,
-                	'career_quiz_result_3_text': resultProgram3Text,
-                	'career_quiz_result_1_link': resultProgram1Link,
-                	'career_quiz_result_2_link': resultProgram2Link,
-                	'career_quiz_result_3_link': resultProgram3Link,
-                	'email': $scope.formData.email,
-  		'return': 'http://www.southhills.edu/quiz/thankyou.php'
-                }),
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            });
-          }
-          else if ($scope.surveyType == 2)
-          {
-            $http({
-                method: 'POST',
-  //              url: 'http://trk.southhills.edu/form/submit?formId=15',
-  //              url: 'http://www.southhills.edu/quiz/saveQuizData.php',
-                data: $httpParamSerializer({
-  		'formId': 15,
-                  'firstname': $scope.formData.firstname,
-                  'lastname': $scope.formData.lastname,
-                	'program_survey_result_1': resultProgram1,
-                	'program_survey_result_2': resultProgram2,
-                	'program_survey_result_3': resultProgram3,
-                	'program_survey_result_1_text': resultProgram1Text,
-                	'program_survey_result_2_text': resultProgram2Text,
-                	'program_survey_result_3_text': resultProgram3Text,
-                	'program_survey_result_1_link': resultProgram1Link,
-                	'program_survey_result_2_link': resultProgram2Link,
-                	'program_survey_result_3_link': resultProgram3Link,
-                	'email': $scope.formData.email,
-  		'return': 'http://www.southhills.edu/quiz/thankyou.php'
-                }),
-                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-            });
-          }
-        }
+        $scope.MauticSendForm2 = true;
+        $http({
+            method: 'POST',
+            url: 'DATA POST URL HERE',
+            data: $httpParamSerializer({
+	            'formId': 13,
+              'firstname': $scope.formData.firstname,
+              'lastname': $scope.formData.lastname,
+            	'career_quiz_result_1': resultProgram1,
+            	'career_quiz_result_2': resultProgram2,
+            	'career_quiz_result_3': resultProgram3,
+            	'career_quiz_result_1_text': resultProgram1Text,
+            	'career_quiz_result_2_text': resultProgram2Text,
+            	'career_quiz_result_3_text': resultProgram3Text,
+            	'career_quiz_result_1_link': resultProgram1Link,
+            	'career_quiz_result_2_link': resultProgram2Link,
+            	'career_quiz_result_3_link': resultProgram3Link,
+            	'email': $scope.formData.email,
+	            'return': 'THANK YOU URL HERE'
+            }),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        });
       }
     }
   }
 
 }]);
-
 
 // angular filter for ordering by highest ranked programs
 app.filter('orderObjectBy', function(){
