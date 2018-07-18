@@ -1,0 +1,16 @@
+<h1 ng-if="surveyType == 1">Career Quiz <span class="small-text">(1 of 3)</span></h1>
+<h1 ng-if="surveyType == 2">Program Interest Survey <span class="small-text">(1 of 3)</span></h1>
+
+<div class="items">
+
+  <h2>Activities that describe me<br/><span class="small-text">(check all that apply)</span></h2>
+  <span ng-if="filteredPrograms.length === 0" class="small-text" style="background-color: red; color: white;">Please Select At Least One Choice</span>
+
+  <span ng-repeat="item in setItems | filter:{ page: 1 }">
+    <input id="{{ item.id }}" type="checkbox" ng-model="item.selected" />
+    <label for="{{ item.id }}">{{ item.phrase }}</label>
+  </span>
+
+  <a ui-sref="home.page2" class="button">Next</a>
+
+</div>

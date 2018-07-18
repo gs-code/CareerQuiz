@@ -1,0 +1,22 @@
+<h1 ng-if="surveyType == 1">Career Quiz <span class="small-text">(results)</span></h1>
+<h1 ng-if="surveyType == 2">Program Interest Survey <span class="small-text">(results)</span></h1>
+
+<div class="items">
+
+  <p ng-if="surveyType == 1"><strong>Thanks for taking our quiz!</strong></p>
+  <p ng-if="surveyType == 2"><strong>Thanks for taking our survey!</strong></p>
+
+  <p ng-if="filteredPrograms.length == 1">Here is your top career path, from the 11 programs we offer at South Hills.  Explore the links to learn more:</p>
+  <p ng-if="filteredPrograms.length > 1">Here are your top {{ filteredPrograms.length }} career paths, from the 11 programs we offer at South Hills.  Explore the links to learn more:</p>
+
+  <p ng-repeat="program in filteredPrograms">
+     <a style="display: block; text-align: center;" href="{{program.link}}" target="_blank">{{program.text}}</a><br/>
+     <a href="{{program.link}}" target="_blank">
+       <img src="images/{{program.slug}}.jpg" alt="{{program.slug}} image" style="display: block; margin:auto; width: 90%; border: 1px solid #ccc;" />
+     </a>
+  </p>
+  <p ng-if="filteredPrograms.length === 0"><strong>No Programs Found</strong> - please go back and make more selections.</p>
+
+  <p>To learn about enrolling at South Hills, <a href="http://www.southhills.edu/careerquiz-thanks" target="_blank">request more info here</a>.</p>
+
+</div>

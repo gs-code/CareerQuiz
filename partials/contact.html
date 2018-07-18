@@ -1,0 +1,29 @@
+<h1 ng-if="surveyType == 1">Career Quiz</h1>
+<h1 ng-if="surveyType == 2">Program Interest Survey</h1>
+
+<div class="items">
+
+  <h2>Find a great fit for your personality!</h2>
+
+  <form name="myForm" ng-submit="processForm(myForm.$valid)" novalidate>
+
+    <div class="form-group">
+      <input ng-model="formData.firstname" name="firstname" type="text" class="form-control" placeholder="First Name" required>
+      <p ng-show="myForm.firstname.$invalid && submitted" class="error">required</p>
+    </div>
+
+    <div class="form-group">
+      <input ng-model="formData.lastname" name="lastname" type="text" class="form-control" placeholder="Last Name" required>
+      <p ng-show="myForm.lastname.$invalid && submitted" class="error">required</p>
+    </div>
+
+    <div class="form-group">
+      <input ng-model="formData.email" name="email" type="email" class="form-control" placeholder="Email" required>
+      <p ng-show="myForm.email.$invalid && submitted" class="error">valid email required</p>
+    </div>
+
+    <button type="submit" class="button">Get Started</button>
+
+  </form>
+
+</div>
